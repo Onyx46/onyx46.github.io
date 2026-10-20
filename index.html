@@ -1,0 +1,665 @@
+<!DOCTYPE html>
+<html lang="fr" class="no-js">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Nicola Strohm · Technicien systèmes et réseaux en alternance</title>
+  <meta name="description" content="Portfolio de Nicola Strohm, étudiant en BTS SIO option SISR à Rennes : homelab Proxmox, montage et reconditionnement de matériel, application Android. À la recherche d'une alternance.">
+  <meta name="author" content="Nicola Strohm">
+  <meta name="theme-color" content="#000000">
+
+  <!-- Open Graph : aperçu quand le lien est partagé (LinkedIn, mail…) -->
+  <meta property="og:title" content="Nicola Strohm · Portfolio">
+  <meta property="og:description" content="BTS SIO SISR · Homelab, matériel, application Android. Disponible immédiatement pour une alternance.">
+  <meta property="og:type" content="website">
+  <meta property="og:image" content="assets/img/materiel/setup-bureau.webp">
+
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%23000'/%3E%3Ctext x='50%25' y='56%25' text-anchor='middle' dominant-baseline='middle' font-family='Arial' font-weight='700' font-size='30' fill='%23ff3b3f'%3ENS%3C/text%3E%3C/svg%3E">
+
+  <!-- Police hébergée dans le projet : préchargée pour s'afficher le plus tôt possible -->
+  <link rel="preload" href="assets/fonts/inter-latin.woff2" as="font" type="font/woff2" crossorigin>
+
+  <link rel="stylesheet" href="css/style.css">
+  <script src="js/main.js" defer></script>
+</head>
+
+<body>
+  <!-- Barre de progression de lecture -->
+  <div class="progress" aria-hidden="true"><span class="progress__bar"></span></div>
+
+  <!-- ============ NAVIGATION ============ -->
+  <header class="nav" id="nav">
+    <div class="nav__inner">
+      <a href="#top" class="nav__logo" aria-label="Retour en haut">Nicola<span>.</span></a>
+
+      <nav class="nav__links" id="nav-links" aria-label="Navigation principale">
+        <a href="#homelab" class="nav__link">Homelab</a>
+        <a href="#materiel" class="nav__link">Matériel</a>
+        <a href="#application" class="nav__link">Application</a>
+        <a href="#parcours" class="nav__link">Parcours</a>
+        <a href="#contact" class="nav__link">Contact</a>
+      </nav>
+
+      <a href="assets/cv/CV_Nicola_Strohm.pdf" class="nav__cta" download>CV</a>
+
+      <button class="nav__burger" id="nav-burger" aria-label="Ouvrir le menu" aria-expanded="false" aria-controls="nav-links">
+        <span></span><span></span>
+      </button>
+    </div>
+  </header>
+
+  <main id="top">
+
+    <!-- ============ HERO ============ -->
+    <section class="hero" aria-labelledby="hero-title">
+      <div class="hero__glow" aria-hidden="true"></div>
+      <div class="hero__grid" aria-hidden="true"></div>
+
+      <div class="hero__content container" id="hero-content">
+        <p class="eyebrow hero__eyebrow">BTS SIO · Option SISR · Rennes</p>
+        <h1 class="hero__title" id="hero-title" data-split>
+          Je monte. Je configure. Je&nbsp;sécurise.
+        </h1>
+        <p class="hero__lead">
+          Étudiant en BTS Services Informatiques aux Organisations, je cherche une alternance
+          en administration systèmes et réseaux. Disponible immédiatement.
+        </p>
+        <div class="hero__actions">
+          <a href="#homelab" class="btn btn--primary">Découvrir mes projets</a>
+          <a href="assets/cv/CV_Nicola_Strohm.pdf" class="btn btn--ghost" download>Télécharger mon CV</a>
+        </div>
+      </div>
+
+      <a href="#homelab" class="hero__scroll" aria-label="Descendre vers le homelab">
+        <span class="hero__scroll-line"></span>
+      </a>
+    </section>
+
+    <!-- ============ HOMELAB ============ -->
+    <section class="section section--dark" id="homelab" aria-labelledby="homelab-title">
+      <div class="container">
+        <header class="section__head" data-reveal>
+          <p class="eyebrow">Projet phare</p>
+          <h2 class="section__title" id="homelab-title">Homelab.</h2>
+          <p class="section__lead">
+            Mon propre serveur, à la maison. Un cloud personnel accessible de partout,
+            sécurisé par VPN et sauvegardé chaque nuit, construit sur une station de travail
+            de récupération.
+          </p>
+        </header>
+
+        <!-- Chiffres clés -->
+        <ul class="stats" data-reveal>
+          <li class="stat">
+            <span class="stat__value"><span data-count="3">3</span></span>
+            <span class="stat__label">Conteneurs LXC</span>
+          </li>
+          <li class="stat">
+            <span class="stat__value"><span data-count="16">16</span>&nbsp;Go</span>
+            <span class="stat__label">RAM ECC</span>
+          </li>
+          <li class="stat">
+            <span class="stat__value"><span data-count="3">3</span>&nbsp;h</span>
+            <span class="stat__label">Sauvegarde chaque nuit</span>
+          </li>
+          <li class="stat">
+            <span class="stat__value"><span data-count="3">3</span></span>
+            <span class="stat__label">Versions conservées</span>
+          </li>
+        </ul>
+      </div>
+
+      <!-- Architecture : schéma collant + étapes qui défilent -->
+      <div class="story container container--wide">
+        <div class="story__visual">
+          <figure class="diagram" id="diagram" aria-label="Schéma de l'architecture du homelab">
+            <svg viewBox="0 0 820 560" role="img" aria-labelledby="diagram-title">
+              <title id="diagram-title">Architecture : appareils, tunnel WireGuard, box, serveur Proxmox, conteneurs et stockage</title>
+              <defs>
+                <linearGradient id="g-server" x1="0" y1="0" x2="0" y2="1">
+                  <stop offset="0" stop-color="#1c1c1e"/>
+                  <stop offset="1" stop-color="#111113"/>
+                </linearGradient>
+              </defs>
+
+              <!-- Liaisons -->
+              <path class="d-link d-link--tunnel" data-steps="2" d="M150 110 C 210 110, 210 170, 255 175"/>
+              <path class="d-link d-link--tunnel" data-steps="2" d="M150 290 C 210 290, 210 200, 255 190"/>
+              <path class="d-link d-link--tunnel" data-steps="2 3" d="M375 180 L 425 180"/>
+              <path class="d-link" data-steps="3 4" d="M545 180 L 580 150"/>
+              <path class="d-link" data-steps="4" d="M680 172 L 680 205"/>
+              <path class="d-link" data-steps="4 5" d="M640 262 C 600 360, 610 420, 620 455"/>
+              <path class="d-link" data-steps="5" d="M720 345 L 735 455"/>
+
+              <!-- Appareils -->
+              <g class="d-node" data-steps="1 2">
+                <rect x="30" y="70" width="120" height="80" rx="16"/>
+                <text x="90" y="105" class="d-title">Smartphone</text>
+                <text x="90" y="126" class="d-sub">client WireGuard</text>
+              </g>
+              <g class="d-node" data-steps="1 2">
+                <rect x="30" y="250" width="120" height="80" rx="16"/>
+                <text x="90" y="285" class="d-title">PC portable</text>
+                <text x="90" y="306" class="d-sub">client WireGuard</text>
+              </g>
+
+              <!-- Internet -->
+              <g class="d-node d-node--soft" data-steps="2">
+                <rect x="255" y="145" width="120" height="70" rx="35"/>
+                <text x="315" y="185" class="d-title">Internet</text>
+              </g>
+
+              <!-- Box -->
+              <g class="d-node" data-steps="3">
+                <rect x="425" y="140" width="120" height="80" rx="16"/>
+                <text x="485" y="172" class="d-title">Box</text>
+                <text x="485" y="192" class="d-sub">IPv4 publique</text>
+                <text x="485" y="208" class="d-sub">redirection UDP</text>
+              </g>
+
+              <!-- Serveur Proxmox -->
+              <g class="d-node d-node--server" data-steps="4 5">
+                <rect x="580" y="40" width="210" height="340" rx="22" fill="url(#g-server)"/>
+                <text x="685" y="72" class="d-title">pve-lab</text>
+                <text x="685" y="92" class="d-sub">Proxmox VE 9 · Dell Precision 5820</text>
+              </g>
+              <g class="d-node d-node--inner" data-steps="3 4">
+                <rect x="600" y="112" width="170" height="60" rx="12"/>
+                <text x="685" y="138" class="d-title">LXC « vpn »</text>
+                <text x="685" y="157" class="d-sub">WireGuard</text>
+              </g>
+              <g class="d-node d-node--inner" data-steps="4">
+                <rect x="600" y="205" width="170" height="60" rx="12"/>
+                <text x="685" y="231" class="d-title">LXC Nextcloud</text>
+                <text x="685" y="250" class="d-sub">cloud personnel</text>
+              </g>
+              <g class="d-node d-node--inner d-node--accent" data-steps="5">
+                <rect x="600" y="298" width="170" height="60" rx="12"/>
+                <text x="685" y="324" class="d-title">Sauvegardes</text>
+                <text x="685" y="343" class="d-sub">chaque nuit à 3 h · 3 versions</text>
+              </g>
+
+              <!-- Stockage -->
+              <g class="d-node" data-steps="4">
+                <rect x="560" y="455" width="120" height="70" rx="14"/>
+                <text x="620" y="485" class="d-title">SSD 256 Go</text>
+                <text x="620" y="505" class="d-sub">système + données</text>
+              </g>
+              <g class="d-node" data-steps="5">
+                <rect x="690" y="455" width="110" height="70" rx="14"/>
+                <text x="745" y="485" class="d-title">HDD 1 To</text>
+                <text x="745" y="505" class="d-sub">sauvegardes</text>
+              </g>
+            </svg>
+          </figure>
+        </div>
+
+        <ol class="story__steps">
+          <li class="step" data-step="1">
+            <span class="step__num">01</span>
+            <h3 class="step__title">Mes appareils, partout.</h3>
+            <p>Depuis mon téléphone ou mon PC portable, j'accède à mes fichiers de cours comme s'ils étaient sur mon bureau, sans OneDrive ni Google Drive.</p>
+          </li>
+          <li class="step" data-step="2">
+            <span class="step__num">02</span>
+            <h3 class="step__title">Un tunnel chiffré.</h3>
+            <p>Chaque connexion distante passe par un VPN WireGuard. Aucun accès à mes services ne se fait en clair sur Internet.</p>
+          </li>
+          <li class="step" data-step="3">
+            <span class="step__num">03</span>
+            <h3 class="step__title">Une seule porte d'entrée.</h3>
+            <p>Ma box dispose d'une IPv4 publique. Une seule redirection de port, vers le conteneur VPN : c'est la seule porte ouverte vers l'extérieur.</p>
+          </li>
+          <li class="step" data-step="4">
+            <span class="step__num">04</span>
+            <h3 class="step__title">Un hyperviseur, des conteneurs.</h3>
+            <p>Proxmox VE 9 tourne sur une Dell Precision 5820 (Xeon W-2102, 16 Go de RAM ECC). Chaque service vit dans son propre conteneur LXC, léger et isolé. Accès admin protégé par double authentification.</p>
+          </li>
+          <li class="step" data-step="5">
+            <span class="step__num">05</span>
+            <h3 class="step__title">Sauvegardé chaque nuit.</h3>
+            <p>Tous les jours à 3 h, les conteneurs sont sauvegardés sur un disque dédié. Les trois dernières versions sont conservées et je reçois une notification à chaque sauvegarde, réussie ou échouée.</p>
+          </li>
+        </ol>
+      </div>
+
+      <!-- Services -->
+      <div class="container">
+        <div class="cards">
+          <article class="card" data-reveal>
+            <div class="card__icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24"><path d="M7 18h10a4 4 0 0 0 .6-7.96A6 6 0 0 0 6.1 9.2 4.5 4.5 0 0 0 7 18Z"/></svg>
+            </div>
+            <h3 class="card__title">Nextcloud</h3>
+            <p class="card__text">Cloud personnel qui synchronise mon dossier de cours entre mon PC portable et ma tour. Hébergé sur SSD, volume ajusté selon les besoins.</p>
+          </article>
+          <article class="card" data-reveal>
+            <div class="card__icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24"><path d="M12 3 4 6v6c0 4.5 3.4 8.3 8 9 4.6-.7 8-4.5 8-9V6l-8-3Z"/><path d="m9 12 2 2 4-4"/></svg>
+            </div>
+            <h3 class="card__title">WireGuard</h3>
+            <p class="card__text">VPN dans un conteneur dédié. Clients configurés sur smartphone et PC portable, accès distant validé.</p>
+          </article>
+          <article class="card" data-reveal>
+            <div class="card__icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24"><path d="M4 7c0-1.7 3.6-3 8-3s8 1.3 8 3-3.6 3-8 3-8-1.3-8-3Z"/><path d="M4 7v10c0 1.7 3.6 3 8 3s8-1.3 8-3V7"/><path d="M4 12c0 1.7 3.6 3 8 3s8-1.3 8-3"/></svg>
+            </div>
+            <h3 class="card__title">Sauvegardes</h3>
+            <p class="card__text">Planifiées chaque nuit à 3 h, rotation sur 3 versions, notification de réussite ou d'échec.</p>
+          </article>
+          <article class="card" data-reveal>
+            <div class="card__icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24"><rect x="5" y="11" width="14" height="10" rx="2"/><path d="M8 11V8a4 4 0 0 1 8 0v3"/></svg>
+            </div>
+            <h3 class="card__title">Sécurité</h3>
+            <p class="card__text">Double authentification sur Proxmox, mises à jour appliquées, services accessibles à distance uniquement via le VPN.</p>
+          </article>
+        </div>
+      </div>
+
+      <!-- Défis rencontrés -->
+      <div class="container">
+        <header class="section__head section__head--small" data-reveal>
+          <p class="eyebrow">Les coulisses</p>
+          <h3 class="section__subtitle">Ce qui ne s'est pas passé comme prévu.</h3>
+        </header>
+
+        <div class="challenges">
+          <details class="challenge" data-reveal>
+            <summary>
+              <span class="challenge__q">Le VPN était-il seulement possible ?</span>
+              <span class="challenge__toggle" aria-hidden="true"></span>
+            </summary>
+            <div class="challenge__body">
+              <p><strong>Problème :</strong> WireGuard doit être joignable depuis Internet. Beaucoup de box partagent une même adresse IP entre plusieurs clients (CGNAT), ce qui rend l'accès entrant impossible.</p>
+              <p><strong>Solution :</strong> j'ai vérifié que l'adresse WAN de ma box correspondait bien à mon IP publique avant de configurer la redirection de port vers le conteneur VPN.</p>
+            </div>
+          </details>
+          <details class="challenge" data-reveal>
+            <summary>
+              <span class="challenge__q">Des disques de récupération pas tous fiables.</span>
+              <span class="challenge__toggle" aria-hidden="true"></span>
+            </summary>
+            <div class="challenge__body">
+              <p><strong>Problème :</strong> je voulais réutiliser des disques durs de récupération, dont l'état était inconnu.</p>
+              <p><strong>Solution :</strong> je les ai testés un par un avec un adaptateur SATA-USB. Un disque, issu d'un ancien iMac, était hors d'usage : je l'ai écarté puis détruit pour qu'aucune donnée ne puisse en être récupérée.</p>
+            </div>
+          </details>
+          <details class="challenge" data-reveal>
+            <summary>
+              <span class="challenge__q">Où stocker quoi ?</span>
+              <span class="challenge__toggle" aria-hidden="true"></span>
+            </summary>
+            <div class="challenge__body">
+              <p><strong>Problème :</strong> l'espace prévu pour Nextcloud est vite devenu trop petit, et mon disque dur de 1 To est ancien.</p>
+              <p><strong>Solution :</strong> j'ai agrandi le volume de données Nextcloud sur le SSD, et réservé le vieux disque aux sauvegardes : s'il lâche, je ne perds qu'une copie, pas les données d'origine.</p>
+            </div>
+          </details>
+        </div>
+      </div>
+
+      <!-- Lab de test : miroir ZFS (RAID 1) simulé sous VMware -->
+      <div class="container">
+        <div class="lab" data-reveal>
+          <div class="lab__text">
+            <p class="eyebrow">Testé avant la production</p>
+            <h3 class="section__subtitle">Un disque lâche. Rien ne se perd.</h3>
+            <p>
+              Avant de monter un miroir sur le vrai serveur, je l'ai testé dans un Proxmox virtualisé
+              sous VMware : un miroir ZFS (l'équivalent du RAID 1) sur deux disques, une panne simulée,
+              puis le remplacement du disque et la vérification des données.
+            </p>
+            <a class="btn btn--ghost" href="assets/docs/procedure-miroir-zfs.pdf" target="_blank" rel="noopener">Lire la procédure (PDF)</a>
+          </div>
+          <ol class="lab__states" aria-label="États successifs du pool ZFS pendant le test">
+            <li class="lab__state lab__state--ok"><b>ONLINE</b><span>Pool « tank » créé : 2 disques en miroir, compression lz4</span></li>
+            <li class="lab__state lab__state--ko"><b>DEGRADED</b><span>Un disque retiré : le fichier témoin reste lisible</span></li>
+            <li class="lab__state lab__state--work"><b>RESILVERING</b><span>zpool replace : reconstruction sur le disque neuf</span></li>
+            <li class="lab__state lab__state--ok"><b>ONLINE</b><span>zpool scrub : 0 erreur</span></li>
+          </ol>
+        </div>
+      </div>
+
+      <!-- Captures : 3 colonnes, clic = agrandir -->
+      <div class="container container--wide">
+        <header class="section__head section__head--small" data-reveal>
+          <p class="eyebrow">En vrai</p>
+          <h3 class="section__subtitle">Captures et photos.</h3>
+          <p class="section__lead">Cliquez sur une image pour l'agrandir.</p>
+        </header>
+
+        <!-- 3 colonnes : matériel | Proxmox | smartphone. La colonne du milieu est deux fois plus large. -->
+        <div class="shots-grid">
+          <div class="shots-grid__col">
+            <figure class="shot" data-reveal="clip">
+              <button class="shot__zoom" type="button" data-lightbox>
+                <img src="assets/img/homelab/serveur.webp" alt="Le serveur Dell Precision 5820 rangé dans un meuble" width="748" height="1400" loading="lazy">
+              </button>
+              <figcaption>Le serveur : une Dell Precision 5820 de récupération.</figcaption>
+            </figure>
+            <figure class="shot" data-reveal="clip">
+              <button class="shot__zoom" type="button" data-lightbox>
+                <img src="assets/img/homelab/serveur-interieur-sm.webp" data-full="assets/img/homelab/serveur-interieur.webp" alt="Intérieur du serveur : carte mère, processeur Xeon et emplacements mémoire" width="900" height="720" loading="lazy">
+              </button>
+              <figcaption>À l'intérieur : Xeon W-2102 et RAM ECC.</figcaption>
+            </figure>
+          </div>
+          <div class="shots-grid__col">
+            <figure class="shot" data-reveal="clip">
+              <button class="shot__zoom" type="button" data-lightbox>
+                <img src="assets/img/homelab/proxmox-sm.webp" data-full="assets/img/homelab/proxmox.webp" alt="Interface Proxmox : trois conteneurs LXC, les espaces de stockage et le journal des tâches avec la sauvegarde de 3 h chaque nuit" width="900" height="447" loading="lazy">
+              </button>
+              <figcaption>Vue d'ensemble de Proxmox : conteneurs, stockage et sauvegardes de 3 h dans le journal des tâches.</figcaption>
+            </figure>
+            <figure class="shot" data-reveal="clip">
+              <button class="shot__zoom" type="button" data-lightbox>
+                <img src="assets/img/homelab/conteneur-nextcloud-sm.webp" data-full="assets/img/homelab/conteneur-nextcloud.webp" alt="Résumé du conteneur Nextcloud dans Proxmox avec les graphiques CPU, mémoire et réseau" width="900" height="356" loading="lazy">
+              </button>
+              <figcaption>Le conteneur Nextcloud et ses ressources.</figcaption>
+            </figure>
+            <figure class="shot" data-reveal="clip">
+              <button class="shot__zoom" type="button" data-lightbox>
+                <img src="assets/img/homelab/conteneur-vpn-sm.webp" data-full="assets/img/homelab/conteneur-vpn.webp" alt="Résumé du conteneur VPN dans Proxmox" width="900" height="356" loading="lazy">
+              </button>
+              <figcaption>Le conteneur VPN : 70 Mo de RAM suffisent.</figcaption>
+            </figure>
+          </div>
+          <div class="shots-grid__col">
+            <figure class="shot" data-reveal="clip">
+              <button class="shot__zoom" type="button" data-lightbox>
+                <img src="assets/img/homelab/nextcloud.webp" alt="Application Nextcloud sur smartphone, dossier Ecole" width="720" height="732" loading="lazy">
+              </button>
+              <figcaption>Mes cours sur mon téléphone, via Nextcloud.</figcaption>
+            </figure>
+            <figure class="shot" data-reveal="clip">
+              <button class="shot__zoom" type="button" data-lightbox>
+                <img src="assets/img/homelab/wireguard.webp" alt="Application WireGuard sur smartphone, clés floutées" width="512" height="800" loading="lazy">
+              </button>
+              <figcaption>Le client WireGuard sur smartphone (clés floutées).</figcaption>
+            </figure>
+          </div>
+        </div>
+      </div>
+
+      <!-- Feuille de route -->
+      <div class="container">
+        <header class="section__head section__head--small" data-reveal>
+          <p class="eyebrow">Feuille de route</p>
+          <h3 class="section__subtitle">Un projet qui grandit.</h3>
+        </header>
+        <ol class="roadmap" data-reveal>
+          <li class="roadmap__item is-done">Proxmox VE 9</li>
+          <li class="roadmap__item is-done">Nextcloud</li>
+          <li class="roadmap__item is-done">VPN WireGuard</li>
+          <li class="roadmap__item is-done">2FA et mises à jour</li>
+          <li class="roadmap__item is-done">Sauvegardes et alertes</li>
+          <li class="roadmap__item is-progress">Pi-hole</li>
+          <li class="roadmap__item">HTTPS pour Nextcloud</li>
+          <li class="roadmap__item">Miroir ZFS sur le serveur</li>
+          <li class="roadmap__item">Jellyfin</li>
+        </ol>
+      </div>
+    </section>
+
+    <!-- ============ MATÉRIEL ============ -->
+    <section class="section section--light" id="materiel" aria-labelledby="materiel-title">
+      <div class="container">
+        <header class="section__head" data-reveal>
+          <p class="eyebrow">Montage et reconditionnement</p>
+          <h2 class="section__title" id="materiel-title">Le matériel, je le connais de l'intérieur.</h2>
+          <p class="section__lead">
+            Choisir des composants compatibles, monter, diagnostiquer, redonner une seconde vie :
+            c'est par là que tout a commencé.
+          </p>
+        </header>
+      </div>
+
+      <!-- Bloc 1 : poste personnel -->
+      <div class="feature container">
+        <div class="feature__media feature__media--portrait" data-scale>
+          <img src="assets/img/materiel/setup-bureau.webp" alt="Mon poste personnel : deux écrans superposés, une tour éclairée et une étagère" width="1100" height="1497" loading="lazy">
+        </div>
+        <div class="feature__text" data-reveal>
+          <h3 class="feature__title">Mon poste personnel.</h3>
+          <p>Monté par mes soins en 2020, c'est ma machine de tous les jours, pour travailler, développer et jouer. Elle évolue au fil du temps, au rythme de mes besoins.</p>
+          <ul class="specs">
+            <li><span>Processeur</span><b>Core i7</b></li>
+            <li><span>Carte graphique</span><b>RTX 3080</b></li>
+            <li><span>Mémoire</span><b>32 Go</b></li>
+            <li><span>Année</span><b>2020</b></li>
+          </ul>
+        </div>
+      </div>
+
+      <!-- Bloc 2 : PC développement et cybersécurité -->
+      <div class="feature feature--reverse container">
+        <div class="feature__media" data-scale>
+          <img src="assets/img/materiel/pc-dev.webp" alt="PC au design épuré avec boîtier aux finitions bois, monté pour le développement et la cybersécurité" width="1300" height="586" loading="lazy">
+        </div>
+        <div class="feature__text" data-reveal>
+          <h3 class="feature__title">Un PC pour le développement et la cybersécurité.</h3>
+          <p>Son propriétaire avait besoin d'une machine dédiée au développement et à la cybersécurité. J'ai préparé la configuration, choisi chaque composant pour cet usage, puis monté le tout dans un boîtier au design épuré, aux finitions chaudes.</p>
+          <ul class="specs">
+            <li><span>Processeur</span><b>Core i9</b></li>
+            <li><span>Carte graphique</span><b>RTX 4080 Super</b></li>
+            <li><span>Mémoire</span><b>64 Go</b></li>
+            <li><span>Année</span><b>2024</b></li>
+          </ul>
+        </div>
+      </div>
+
+      <!-- Bloc 3 : iMac -->
+      <div class="feature container">
+        <div class="feature__media" data-scale>
+          <img src="assets/img/materiel/imac-ecran.webp" alt="Ancien iMac transformé en écran externe, utilisé à côté d'un autre moniteur" width="1300" height="732" loading="lazy">
+        </div>
+        <div class="feature__text" data-reveal>
+          <h3 class="feature__title">Un iMac de 2009, devenu écran 1440p.</h3>
+          <p>Démontage complet, identification de la référence de la dalle IPS, retrait des composants inutiles, puis installation d'une carte contrôleur avec boîtier et panneau de commande externes.</p>
+          <p class="feature__note">Résultat : un écran 2560 × 1440 à 60 Hz qui a trouvé une seconde vie, au lieu de finir à la déchetterie.</p>
+        </div>
+      </div>
+
+      <!-- Bande défilante en boucle : le JS duplique les images pour une boucle sans coupure -->
+      <div class="marquee-wrap" data-reveal>
+        <h3 class="gallery__title container">En images.</h3>
+        <div class="marquee" aria-label="Galerie de photos de matériel">
+          <div class="marquee__track">
+          <figure class="marquee__item">
+            <img src="assets/img/materiel/galerie/setup.webp" alt="Mon bureau avec ses deux écrans, la tour éclairée et l'étagère" width="640" height="862" loading="lazy" draggable="false">
+            <figcaption>Mon poste de travail</figcaption>
+          </figure>
+          <figure class="marquee__item">
+            <img src="assets/img/materiel/galerie/pc-cyber.webp" alt="PC au boîtier à finitions bois, monté pour le développement et la cybersécurité" width="640" height="853" loading="lazy" draggable="false">
+            <figcaption>PC développement et cybersécurité</figcaption>
+          </figure>
+          <figure class="marquee__item">
+            <img src="assets/img/materiel/galerie/imac-demontage.webp" alt="iMac de 2009 démonté sur le plan de travail" width="640" height="1139" loading="lazy" draggable="false">
+            <figcaption>iMac 2009 : démontage</figcaption>
+          </figure>
+          <figure class="marquee__item">
+            <img src="assets/img/materiel/galerie/imac-controleur.webp" alt="Carte contrôleur installée à l'arrière de la dalle de l'iMac" width="640" height="1139" loading="lazy" draggable="false">
+            <figcaption>iMac : carte contrôleur</figcaption>
+          </figure>
+          <figure class="marquee__item">
+            <img src="assets/img/materiel/galerie/imac-resultat.webp" alt="L'ancien iMac utilisé comme écran, à côté d'un second moniteur" width="640" height="853" loading="lazy" draggable="false">
+            <figcaption>iMac : devenu écran 1440p</figcaption>
+          </figure>
+          <figure class="marquee__item">
+            <img src="assets/img/materiel/galerie/3ds-xl.webp" alt="Nintendo 3DS XL allumée après réparation" width="640" height="1139" loading="lazy" draggable="false">
+            <figcaption>3DS XL : révision complète</figcaption>
+          </figure>
+          <figure class="marquee__item">
+            <img src="assets/img/materiel/galerie/pc-streaming.webp" alt="PC dans un boîtier ventilé à façade mesh, éclairage violet" width="640" height="914" loading="lazy" draggable="false">
+            <figcaption>Montage gaming et streaming</figcaption>
+          </figure>
+          <figure class="marquee__item">
+            <img src="assets/img/materiel/galerie/pc-gaming-1.webp" alt="PC gaming avec ventilateurs éclairés en façade" width="640" height="1041" loading="lazy" draggable="false">
+            <figcaption>Montage gaming</figcaption>
+          </figure>
+          <figure class="marquee__item">
+            <img src="assets/img/materiel/galerie/pc-gaming-2.webp" alt="PC gaming avec watercooling et éclairage bleu" width="640" height="853" loading="lazy" draggable="false">
+            <figcaption>Montage gaming</figcaption>
+          </figure>
+          <figure class="marquee__item">
+            <img src="assets/img/materiel/galerie/pc-gaming-3.webp" alt="PC gaming en verre trempé avec éclairage RGB" width="640" height="853" loading="lazy" draggable="false">
+            <figcaption>Montage gaming</figcaption>
+          </figure>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ APPLICATION ============ -->
+    <section class="section section--dark" id="application" aria-labelledby="app-title">
+      <div class="container">
+        <header class="section__head" data-reveal>
+          <p class="eyebrow">Application Android · SkylandCollec</p>
+          <h2 class="section__title" id="app-title">Ma collection, dans ma poche.</h2>
+          <p class="section__lead">
+            Une application terminée pour référencer et suivre une collection de figurines
+            Skylanders, développée en Kotlin sous Android Studio.
+          </p>
+        </header>
+
+        <ul class="stats stats--app" data-reveal>
+          <li class="stat"><span class="stat__value"><span data-count="503">503</span></span><span class="stat__label">Figurines référencées</span></li>
+          <li class="stat"><span class="stat__value"><span data-count="6">6</span></span><span class="stat__label">Jeux couverts</span></li>
+          <li class="stat"><span class="stat__value"><span data-count="11">11</span></span><span class="stat__label">Éléments</span></li>
+          <li class="stat"><span class="stat__value">NFC</span><span class="stat__label">Puce associée</span></li>
+        </ul>
+      </div>
+
+      <!-- Rangée de téléphones : chacun bouge à sa propre vitesse au défilement -->
+      <div class="container container--wide">
+        <div class="phones">
+          <figure class="phones__item" data-reveal>
+            <div class="phone" data-parallax="0.10"><img src="assets/img/app/collection.webp" alt="Écran de la collection avec la recherche, le tri et les filtres par type" width="600" height="1333" loading="lazy"></div>
+            <figcaption>Recherche, tri et filtres</figcaption>
+          </figure>
+          <figure class="phones__item" data-reveal>
+            <div class="phone" data-parallax="-0.08"><img src="assets/img/app/fiche.webp" alt="Fiche de la figurine Stealth Elf : jeu d'origine, type, année et puce NFC" width="600" height="1333" loading="lazy"></div>
+            <figcaption>Une fiche par figurine</figcaption>
+          </figure>
+          <figure class="phones__item" data-reveal>
+            <div class="phone" data-parallax="0.12"><img src="assets/img/app/stats-1.webp" alt="Statistiques de la collection : pourcentage possédé, par type et par jeu" width="600" height="1333" loading="lazy"></div>
+            <figcaption>Statistiques de collection</figcaption>
+          </figure>
+          <figure class="phones__item" data-reveal>
+            <div class="phone" data-parallax="-0.06"><img src="assets/img/app/stats-2.webp" alt="Statistiques par élément et boutons d'export et d'import de la collection" width="600" height="1333" loading="lazy"></div>
+            <figcaption>Par élément, et sauvegardée</figcaption>
+          </figure>
+        </div>
+      </div>
+
+      <div class="container app">
+        <ul class="checklist" data-reveal>
+          <li>503 figurines référencées, avec recherche, tri et filtres par type</li>
+          <li>Une fiche par figurine : jeu d'origine, type, élément, année de sortie</li>
+          <li>Association de la puce NFC de la figurine</li>
+          <li>Statistiques de progression par type, par jeu et par élément</li>
+          <li>Export et import de la collection, pour la retrouver sur un autre téléphone</li>
+        </ul>
+        <div data-reveal>
+          <p class="app__note">
+            Projet mené avec l'assistance de l'IA : j'ai défini les fonctionnalités, piloté le
+            développement étape par étape, testé et corrigé jusqu'à une application terminée.
+          </p>
+          <ul class="tags">
+            <li>Kotlin</li><li>Android Studio</li><li>NFC</li><li>IA générative</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ PARCOURS ============ -->
+    <section class="section section--light" id="parcours" aria-labelledby="parcours-title">
+      <div class="container">
+        <header class="section__head" data-reveal>
+          <p class="eyebrow">Parcours</p>
+          <h2 class="section__title" id="parcours-title">Un chemin pas tout à fait droit.</h2>
+          <p class="section__lead">
+            Le droit m'a appris la rigueur et l'écriture. L'industrie m'a appris les procédures.
+            L'informatique, je l'ai choisie.
+          </p>
+        </header>
+
+        <ol class="timeline">
+          <li class="timeline__item" data-reveal>
+            <span class="timeline__date">2026 – 2028</span>
+            <h3 class="timeline__title">BTS SIO, option SISR</h3>
+            <p>MyDigitalSchool, Rennes. En alternance, une semaine en entreprise et une semaine à l'école.</p>
+          </li>
+          <li class="timeline__item" data-reveal>
+            <span class="timeline__date">18 mois</span>
+            <h3 class="timeline__title">Agent logistique, Daher Aerospace</h3>
+            <p>Sur le site d'ArianeGroup. Gestion des stocks sous SAP, inventaires, suivi des livraisons, travail en équipe dans un secteur exigeant.</p>
+          </li>
+          <li class="timeline__item" data-reveal>
+            <span class="timeline__date">2023 – 2026</span>
+            <h3 class="timeline__title">Études de droit</h3>
+            <p>Université de Rouen, droit général et droit des affaires. Rigueur d'analyse, rédaction, sensibilité à la protection des données.</p>
+          </li>
+          <li class="timeline__item" data-reveal>
+            <span class="timeline__date">2022</span>
+            <h3 class="timeline__title">Baccalauréat général</h3>
+            <p>Spécialités littérature et géopolitique, lycée Georges Dumézil, Vernon.</p>
+          </li>
+        </ol>
+
+        <div class="skills" data-reveal>
+          <div class="skills__group">
+            <h3>Systèmes et virtualisation</h3>
+            <ul class="tags tags--light"><li>Proxmox VE</li><li>LXC</li><li>VMware Workstation</li><li>Debian</li><li>Windows</li></ul>
+          </div>
+          <div class="skills__group">
+            <h3>Réseau et sécurité</h3>
+            <ul class="tags tags--light"><li>TCP/IP</li><li>Adressage IPv4/IPv6</li><li>DHCP · DNS</li><li>WireGuard</li><li>2FA</li></ul>
+          </div>
+          <div class="skills__group">
+            <h3>Matériel et outils</h3>
+            <ul class="tags tags--light"><li>Montage PC</li><li>Diagnostic</li><li>Reconditionnement</li><li>SAP</li><li>Pack Office</li></ul>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ CONTACT ============ -->
+    <section class="section section--dark contact" id="contact" aria-labelledby="contact-title">
+      <div class="container contact__inner">
+        <p class="eyebrow" data-reveal>Disponible immédiatement</p>
+        <h2 class="contact__title" id="contact-title" data-reveal>Discutons.</h2>
+        <p class="section__lead" data-reveal>
+          Je cherche une alternance de deux ans en systèmes et réseaux.
+        </p>
+        <div class="contact__links" data-reveal>
+          <div class="contact__link contact__link--static">
+            <span>Email</span>nicolastrohm90@gmail.com
+          </div>
+          <div class="contact__link contact__link--static">
+            <span>Téléphone</span>06 40 81 97 35
+          </div>
+          <a href="https://www.linkedin.com/in/nicola-strohm-245bb6337" class="contact__link" target="_blank" rel="noopener">
+            <span>LinkedIn</span>nicola-strohm
+          </a>
+        </div>
+        <a href="assets/cv/CV_Nicola_Strohm.pdf" class="btn btn--primary btn--large" download data-reveal>Télécharger mon CV</a>
+      </div>
+    </section>
+  </main>
+
+  <!-- Visionneuse d'images (lightbox) : une seule pour toute la page, remplie par le JS -->
+  <dialog class="lightbox" id="lightbox" aria-label="Image agrandie">
+    <button class="lightbox__close" type="button" aria-label="Fermer">×</button>
+    <img class="lightbox__img" src="" alt="">
+    <p class="lightbox__caption"></p>
+  </dialog>
+
+  <footer class="footer">
+    <div class="container footer__inner">
+      <p>© <span id="year">2026</span> Nicola Strohm · Rennes</p>
+      <a href="#top" class="footer__top">Retour en haut ↑</a>
+    </div>
+  </footer>
+</body>
+</html>
